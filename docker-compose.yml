@@ -1,0 +1,14 @@
+services:
+  web:
+    build:
+      context: .
+    image: devops-webapp-cicd:local
+    container_name: devops-webapp-cicd
+    ports:
+      - "8000:8000"
+    environment:
+      APP_NAME: "DevOps Starter App"
+      APP_VERSION: "1.0.0"
+      ENVIRONMENT: "local"
+      PORT: "8000"
+    restart: unless-stopped

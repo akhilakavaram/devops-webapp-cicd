@@ -17,6 +17,14 @@ def health_payload():
     }
 
 
+def readiness_payload():
+    return {
+        "ready": True,
+        "service": APP_NAME,
+        "environment": ENVIRONMENT,
+    }
+
+
 def version_payload():
     return {
         "service": APP_NAME,
@@ -77,7 +85,7 @@ def homepage_html():
       <div class="panel">
         <p><strong>Environment:</strong> {ENVIRONMENT}</p>
         <p><strong>Version:</strong> {APP_VERSION}</p>
-        <p>Try <code>/health</code> and <code>/version</code> for JSON endpoints.</p>
+        <p>Try <code>/health</code>, <code>/ready</code>, and <code>/version</code> for JSON endpoints.</p>
       </div>
     </main>
   </body>
@@ -90,6 +98,7 @@ class AppHandler(BaseHTTPRequestHandler):
         routes = {
             "/": self._homepage,
             "/health": lambda: self._json_response(health_payload()),
+            "/ready": lambda: self._json_response(readiness_payload()),
             "/version": lambda: self._json_response(version_payload()),
         }
         handler = routes.get(self.path)

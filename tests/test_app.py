@@ -5,7 +5,7 @@ import unittest
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from app.main import health_payload, homepage_html, version_payload
+from app.main import health_payload, homepage_html, readiness_payload, version_payload
 
 
 class AppTests(unittest.TestCase):
@@ -23,11 +23,19 @@ class AppTests(unittest.TestCase):
         self.assertEqual(payload["service"], "DevOps Starter App")
         self.assertEqual(payload["version"], "1.0.0")
 
+    def test_readiness_payload_reports_ready(self):
+        payload = readiness_payload()
+
+        self.assertTrue(payload["ready"])
+        self.assertEqual(payload["service"], "DevOps Starter App")
+        self.assertEqual(payload["environment"], "local")
+
     def test_homepage_mentions_devops_project(self):
         html = homepage_html()
 
         self.assertIn("first DevOps project", html)
         self.assertIn("/health", html)
+        self.assertIn("/ready", html)
 
 
 if __name__ == "__main__":

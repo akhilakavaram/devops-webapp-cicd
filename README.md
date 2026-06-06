@@ -56,6 +56,7 @@ Useful endpoints:
 
 ```text
 http://localhost:8000/health
+http://localhost:8000/ready
 http://localhost:8000/version
 ```
 
